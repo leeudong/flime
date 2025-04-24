@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Red Camera</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: black;
+    }
+    #camera {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+    }
+    .red-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(200, 0, 0, 0.8); /* 셀로판처럼 진하고 묵직한 빨강 */
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <video id="camera" autoplay playsinline muted></video>
+  <div class="red-overlay"></div>
+
+  <script>
+    navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "environment" }, // 후면 카메라 사용
+      audio: false
+    })
+    .then((stream) => {
+      const video = document.getElementById('camera');
+      video.srcObject = stream;
+    })
+    .catch((err) => {
+      alert("카메라 접근이 거부되었습니다: " + err);
+    });
+  </script>
+</body>
+</html>
